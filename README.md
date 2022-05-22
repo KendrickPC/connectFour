@@ -43,7 +43,7 @@ div.classList.add('piece');
   // TODO: add line to update in-memory board
   placeInTable(y, x);
   board[y][x] = currPlayer;
-  counter += 1;
+  counter += 1; // To check for ties... if counter === maximum spaces, it's a tie (because checkForWin() did not kick in);
 ```
 
 8. Inside css file:
@@ -58,5 +58,15 @@ div.classList.add('piece');
 }
 ```
 The board should be working now, but only with first player color (red):
+
+9. Inside handleClick(evt):
+if currPlayer === 1, set currPlayer to 2: if currPlayer === 2: set currPlayer to 1;
+Now colors on the board should change accordingly.
+
+10. Inside endGame(msg), call alert function with the argument of msg. This can be found inside the handleClick() function where the if(checkForWin()) function is checked: the return endGame(objectLiteral) is the msg/argument. Basically, return that object literal string.
+
+11. Clean up handleClick function to clear out var declarations to let/const:
+
+12. Clean up checkForWin() function to clear our var declarations to let/const:
 
 

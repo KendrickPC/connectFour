@@ -102,23 +102,20 @@ function endGame(msg) {
 }
 
 /** handleClick: handle click of column top to play piece */
-
 function handleClick(evt) {
   // get x from ID of clicked cell
-  var x = +evt.target.id;
-
+  const x = +evt.target.id;
   // get next spot in column (if none, ignore click)
-  var y = findSpotForCol(x);
+  const y = findSpotForCol(x);
   if (y === null) {
     return;
   }
-
   // place piece in board and add to HTML table
   // TODO: add line to update in-memory board
   placeInTable(y, x);
+  // Updating in-memory board:
   board[y][x] = currPlayer;
   
-
   // check for win
   if (checkForWin()) {
     // aka msg variable for endGame function argument:
@@ -159,12 +156,12 @@ function checkForWin() {
 
   // TODO: read and understand this code. Add comments to help you.
 
-  for (var y = 0; y < HEIGHT; y++) {
-    for (var x = 0; x < WIDTH; x++) {
-      var horiz = [[y, x], [y, x + 1], [y, x + 2], [y, x + 3]];
-      var vert = [[y, x], [y + 1, x], [y + 2, x], [y + 3, x]];
-      var diagDR = [[y, x], [y + 1, x + 1], [y + 2, x + 2], [y + 3, x + 3]];
-      var diagDL = [[y, x], [y + 1, x - 1], [y + 2, x - 2], [y + 3, x - 3]];
+  for (let y = 0; y < HEIGHT; y++) {
+    for (let x = 0; x < WIDTH; x++) {
+      const horiz = [[y, x], [y, x + 1], [y, x + 2], [y, x + 3]];
+      const vert = [[y, x], [y + 1, x], [y + 2, x], [y + 3, x]];
+      const diagDR = [[y, x], [y + 1, x + 1], [y + 2, x + 2], [y + 3, x + 3]];
+      const diagDL = [[y, x], [y + 1, x - 1], [y + 2, x - 2], [y + 3, x - 3]];
 
       if (_win(horiz) || _win(vert) || _win(diagDR) || _win(diagDL)) {
         return true;
