@@ -9,7 +9,7 @@ const WIDTH = 7;
 const HEIGHT = 6;
 
 let currPlayer = 1; // active player: 1 or 2
-const board = []; // array of rows, each row is array of cells  (board[y][x])
+let board = []; // array of rows, each row is array of cells  (board[y][x])
 let counter = 0;
 /** makeBoard: create in-JS board structure:
  *    board = array of rows, each row is array of cells  (board[y][x])
@@ -17,7 +17,9 @@ let counter = 0;
 
 function makeBoard() {
   // TODO: set "board" to empty HEIGHT x WIDTH matrix array
-  return Array.from(Array(WIDTH), () => Array(HEIGHT).fill(null))
+  // Since board is already declared, "SET" board to 2d array filled with null: Return the board. Keyword here is "SET"
+  board = Array.from(Array(HEIGHT), () => Array(WIDTH).fill(null))
+  return board;
 }
 
 /** makeHtmlBoard: make HTML table and row of column tops. */
@@ -25,31 +27,43 @@ function makeHtmlBoard() {
   // TODO: get "htmlBoard" variable from the item in HTML w/ID of "board"
   const htmlBoard = document.getElementById('board')
   // TODO: add comment for this code
+  // Creating a table row element and labeling and setting it to a variable "top"
   const top = document.createElement("tr");
+  // Giving our newly created top/table row/html tr element an attribute:
   top.setAttribute("id", "column-top");
+  // Adding a click event listener to top:
   top.addEventListener("click", handleClick);
-
+  // Iterating through WIDTH. 
   for (let x = 0; x < WIDTH; x++) {
+    // Creating a table data element and setting it to headCell:
     const headCell = document.createElement("td");
+    // Giving the headCell a unique id (using x):
     headCell.setAttribute("id", x);
+    // adding headCell element (table data) to table row / top variable:
     top.append(headCell);
   }
+  // Adding our table row element to our htmlBoard
   htmlBoard.append(top);
   // TODO: add comment for this code
+  // Iterating through our height:
   for (let y = 0; y < HEIGHT; y++) {
+    // creating a row/table row/y HTML element for our outer array:
     const row = document.createElement("tr");
     for (let x = 0; x < WIDTH; x++) {
+      // Iterating through our WIDTH to create an inner table data of appropriate width:
       const cell = document.createElement("td");
+      // Giving our inner table data/cell a unique id by using the y-x as id reference:
       cell.setAttribute("id", `${y}-${x}`);
+      // appending our table data/cell to our outer row/table row. 
       row.append(cell);
     }
+    // Adding our table row (with table data) to our htmlBoard to be rendered:
     htmlBoard.append(row);
   }
 }
 
 /** findSpotForCol: given column x, return top empty y (null if filled) */
 function findSpotForCol(x) {
-  // TODO: write the real version of this, rather than always returning 0
   for (let y=HEIGHT-1; y >= 0; y--) {
     if (board[y][x] === null) {
       return y;
@@ -65,6 +79,12 @@ function placeInTable(y, x) {
   const div = document.createElement('div');
   // 2. Adding circular connect four piece aka Adding div to be rendered.
   div.classList.add('piece');
+  // 3. Give the piece/div a unique id:
+  const divPlayerId = `player-${currPlayer}`;
+  div.setAttribute('id', divPlayerId);
+  const cellID = `${y}-${x}`;
+  const cell = document.getElementById(cellID);
+  cell.append(div);
 }
 
 /** endGame: announce game end */
@@ -88,6 +108,8 @@ function handleClick(evt) {
   // place piece in board and add to HTML table
   // TODO: add line to update in-memory board
   placeInTable(y, x);
+  board[y][x] = currPlayer;
+  
 
   // check for win
   if (checkForWin()) {
@@ -99,6 +121,13 @@ function handleClick(evt) {
 
   // switch players
   // TODO: switch currPlayer 1 <-> 2
+  if (currPlayer === 1) {
+    currPlayer = 2;
+  } else {
+    // currPlayer === 2:
+    // switch currPlayer back to 1;
+    currPlayer = 1;
+  }
 }
 
 /** checkForWin: check board cell-by-cell for "does a win start here?" */
