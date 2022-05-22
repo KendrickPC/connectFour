@@ -115,7 +115,7 @@ function handleClick(evt) {
   placeInTable(y, x);
   // Updating in-memory board:
   board[y][x] = currPlayer;
-  
+  counter += 1;
   // check for win
   if (checkForWin()) {
     // aka msg variable for endGame function argument:
@@ -124,6 +124,7 @@ function handleClick(evt) {
 
   // check for tie
   // TODO: check if all cells in board are filled; if so call, call endGame
+  if (counter >= HEIGHT * WIDTH) endGame("TIE GAME! Game OVER!")
 
   // switch players
   // TODO: switch currPlayer 1 <-> 2
