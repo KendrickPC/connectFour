@@ -64,11 +64,14 @@ function makeHtmlBoard() {
 
 /** findSpotForCol: given column x, return top empty y (null if filled) */
 function findSpotForCol(x) {
+  // Iterating through our height:
   for (let y=HEIGHT-1; y >= 0; y--) {
+    // If y,x position === null, return y;
     if (board[y][x] === null) {
       return y;
     }
   }
+  // After the complete iteration, return null (if filled):
   return null;
 }
 
@@ -81,16 +84,21 @@ function placeInTable(y, x) {
   div.classList.add('piece');
   // 3. Give the piece/div a unique id:
   const divPlayerId = `player-${currPlayer}`;
+  // 4. GIving our div an attribute id set to divPlayerId
   div.setAttribute('id', divPlayerId);
+  // 5. GIving our cell a unique ID of y and x position:
   const cellID = `${y}-${x}`;
+  // storing our cellID into a cell constant:
   const cell = document.getElementById(cellID);
+  // Adding our newly created div (with identifier attributes) to our cell:
   cell.append(div);
 }
 
 /** endGame: announce game end */
-
 function endGame(msg) {
   // TODO: pop up alert message
+  // Check handleClick(evt) for checkForWin() call:
+  alert(msg);
 }
 
 /** handleClick: handle click of column top to play piece */
@@ -113,6 +121,7 @@ function handleClick(evt) {
 
   // check for win
   if (checkForWin()) {
+    // aka msg variable for endGame function argument:
     return endGame(`Player ${currPlayer} won!`);
   }
 
