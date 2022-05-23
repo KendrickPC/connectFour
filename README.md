@@ -69,4 +69,6 @@ Now colors on the board should change accordingly.
 
 12. Clean up checkForWin() function to clear our var declarations to let/const:
 
+13. If count is equal to HEIGHT * WIDTH: call endGame("TIE GAME! GAME OVER!");
+
 
